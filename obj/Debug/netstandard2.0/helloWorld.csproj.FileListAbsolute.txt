@@ -1,0 +1,9 @@
+C:\TruffleWorkSpace\helloWorld\bin\Debug\netstandard2.0\helloWorld.deps.json
+C:\TruffleWorkSpace\helloWorld\bin\Debug\netstandard2.0\helloWorld.dll
+C:\TruffleWorkSpace\helloWorld\bin\Debug\netstandard2.0\helloWorld.pdb
+C:\TruffleWorkSpace\helloWorld\obj\Debug\netstandard2.0\helloWorld.csprojAssemblyReference.cache
+C:\TruffleWorkSpace\helloWorld\obj\Debug\netstandard2.0\helloWorld.AssemblyInfoInputs.cache
+C:\TruffleWorkSpace\helloWorld\obj\Debug\netstandard2.0\helloWorld.AssemblyInfo.cs
+C:\TruffleWorkSpace\helloWorld\obj\Debug\netstandard2.0\helloWorld.csproj.CoreCompileInputs.cache
+C:\TruffleWorkSpace\helloWorld\obj\Debug\netstandard2.0\helloWorld.dll
+C:\TruffleWorkSpace\helloWorld\obj\Debug\netstandard2.0\helloWorld.pdb

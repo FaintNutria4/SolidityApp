@@ -3,22 +3,18 @@ pragma solidity 0.8.11;
 
 contract ItemStorage {
 
-   Struct ItemInfo {
+      mapping (uint => uint) id2Balance;
+      mapping (address = > id2balance) address2Balances;
 
-      string public name;
-      uint private id;
-      uint private dmg;
-   }
+    struct Item {
+      uint idType;
+      string name;
+      string description;
+      uint damage;
+    }
 
-   mapping(uint => uint) public idToValueMap;
-   mapping(address => IdToValueMap) public ownerships;
-   mapping(uint => ItemInfo) public idToItemInfo; 
+    constructor() {
 
-
-    constructor(uint _id,  string memory _name, uint _dmg) {
-        id = _id;
-        name = _name;
-        dmg = _dmg;
     }
 
     function  getId() public view returns (uint) {
