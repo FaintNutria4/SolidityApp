@@ -4,7 +4,7 @@ pragma solidity 0.8.11;
 contract ItemStorage {
 
    mapping (uint => uint) id2Balance;
-   mapping (address = > id2balance) address2Balances;
+   mapping (address =>  mapping (uint => uint)) address2Balances;
 
    mapping(uint => Item) itemStats;
 
@@ -24,8 +24,8 @@ contract ItemStorage {
 
    }
 
-   function getBalances() public returns (id2balance){
+   function getBalances() public returns ( memory mapping(uint => uint) ){
       return address2Balances[msg.sender];
    }
 
- }
+ }  
