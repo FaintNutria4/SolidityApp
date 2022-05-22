@@ -4,8 +4,8 @@ pragma solidity 0.8.11;
 contract ItemStorage {
 
 
-   mapping (uint => uint) id2Balance;
-   mapping (address =>  mapping (uint => uint)) address2Balances;
+   mapping(uint => uint) private id2Balance;
+   mapping(address =>  mapping (uint => uint)) private address2Balances;
 
    mapping(uint => Item) itemStats;
    uint itemTypes;
@@ -28,12 +28,13 @@ contract ItemStorage {
 
    }
 
-   function getBalances() public returns ( uint[] memory){
+   function getBalances() public view returns ( uint[] memory ){
 
-      uint[] memory balances;
+      uint auxint = itemTypes;
+      uint[] memory balances = new uint[](auxint);
       mapping(uint => uint) storage auxMap = address2Balances[msg.sender];
 
-      for(uint i = 0; i < 2; i++) {
+      for(uint i = 0; i < auxint; i++) {
             balances[i] = auxMap[i];
       }
 
