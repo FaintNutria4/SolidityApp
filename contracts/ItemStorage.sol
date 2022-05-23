@@ -52,7 +52,7 @@ contract ItemStorage {
       balances[_idType] = balances[idType] + _items;
    }
 
-   function getBalances() public view returns (uint[] memory {
+   function getBalances() public view returns (uint[] memory) {
 
       uint auxint = itemTypes;
       uint[] memory balances = new uint[](auxint);
@@ -66,7 +66,7 @@ contract ItemStorage {
       return balances;
    }
 
-   function getItemStats(uint _idType) public itemExists(_idType) view return (itemStats) {
+   function getItemStats(uint _idType) public view itemExists(_idType) return (itemStats) {
       return itemStats[_idType];
    }
 
