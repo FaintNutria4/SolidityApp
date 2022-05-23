@@ -18,7 +18,7 @@ contract ItemStorage {
       uint damage;
    }
 
-   constructor() public {
+   constructor() {
       owner = msg.sender;
    }
 
@@ -39,7 +39,6 @@ contract ItemStorage {
    {
       Item memory newItem = Item(_idType, _name, _description, _damage);
       itemStats[_idType] = newItem;
-      address2Balances[_owner][_idType] = address2Balances[_owner][_idType] + 1;
 
       itemTypes = itemTypes + 1;
 
@@ -48,8 +47,8 @@ contract ItemStorage {
    }
 
    function addItemToAddress(address _newOwner, uint _idType, uint _items) public onlyOwner {
-      mapping(uint => uint) balances = address2Balances[_newOwner];
-      balances[_idType] = balances[idType] + _items;
+      mapping(uint => uint) storage balances = address2Balances[_newOwner];
+      balances[_idType] = balances[_idType] + _items;
    }
 
    function getBalances() public view returns (uint[] memory) {
@@ -66,7 +65,7 @@ contract ItemStorage {
       return balances;
    }
 
-   function getItemStats(uint _idType) public view itemExists(_idType) return (itemStats) {
+   function getItemStats(uint _idType) public view itemExists(_idType) returns (Item memory) {
       return itemStats[_idType];
    }
 
