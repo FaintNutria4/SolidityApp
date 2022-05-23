@@ -4,8 +4,9 @@ pragma solidity 0.8.11;
 contract ItemStorage {
 
 
-   mapping(uint => uint) private id2Balance;
-   mapping(address =>  mapping (uint => uint)) private address2Balances;
+   address owner;
+
+   mapping(address => mapping (uint => uint)) private address2Balances;
 
    mapping(uint => Item) itemStats;
    uint itemTypes;
@@ -17,8 +18,21 @@ contract ItemStorage {
       uint damage;
    }
 
-   function createItem(uint _idType, string memory _name , string memory _description , uint damage, address _owner) public returns (Item memory) {
-      Item memory newItem = Item(_idType, _name, _description, damage);
+   constructor() public {
+      owner = msg.sender;
+   }
+
+   modifier onlyOwner {
+      require(msg.sender == owner);
+      _;
+   }
+
+   function createItem(uint _idType, string memory _name, string memory _description, uint _damage) 
+      public 
+      onlyOwner 
+      returns (Item memory)  
+   {
+      Item memory newItem = Item(_idType, _name, _description, _damage);
       itemStats[_idType] = newItem;
       address2Balances[_owner][_idType] = address2Balances[_owner][_idType] + 1;
 
@@ -26,6 +40,11 @@ contract ItemStorage {
 
       return newItem;
 
+   }
+
+   function addItemToAddress(address _newOwner, uint _idType, uint _items) public onlyOwner {
+      mapping(uint => uint) balances = address2Balances[_newOwner];
+      balances[_idType] = balances[idType] + _items;
    }
 
    function getBalances() public view returns ( uint[] memory ){
