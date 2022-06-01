@@ -16,6 +16,7 @@ contract ItemStorage {
       string name;
       string description;
       uint damage;
+      string cid;
    }
 
    constructor() {
@@ -32,12 +33,12 @@ contract ItemStorage {
       _;
    }
 
-   function createItem(uint _idType, string memory _name, string memory _description, uint _damage) 
+   function createItem(uint _idType, string memory _name, string memory _description, uint _damage, string memory _cid) 
       public 
       onlyOwner 
       returns (Item memory)  
    {
-      Item memory newItem = Item(_idType, _name, _description, _damage);
+      Item memory newItem = Item(_idType, _name, _description, _damage, _cid);
       itemStats[_idType] = newItem;
 
       itemTypes = itemTypes + 1;

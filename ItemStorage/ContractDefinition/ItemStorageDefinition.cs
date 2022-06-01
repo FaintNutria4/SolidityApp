@@ -39,10 +39,21 @@ namespace helloWorld.ItemStorage.ContractDefinition
         public virtual string Name { get; set; }
         [Parameter("string", "_description", 3)]
         public virtual string Description { get; set; }
-        [Parameter("uint256", "damage", 4)]
+        [Parameter("uint256", "_damage", 4)]
         public virtual BigInteger Damage { get; set; }
-        [Parameter("address", "_owner", 5)]
-        public virtual string Owner { get; set; }
+    }
+
+    public partial class AddItemToAddressFunction : AddItemToAddressFunctionBase { }
+
+    [Function("addItemToAddress")]
+    public class AddItemToAddressFunctionBase : FunctionMessage
+    {
+        [Parameter("address", "_newOwner", 1)]
+        public virtual string NewOwner { get; set; }
+        [Parameter("uint256", "_idType", 2)]
+        public virtual BigInteger IdType { get; set; }
+        [Parameter("uint256", "_items", 3)]
+        public virtual BigInteger Items { get; set; }
     }
 
     public partial class GetBalancesFunction : GetBalancesFunctionBase { }
@@ -51,6 +62,15 @@ namespace helloWorld.ItemStorage.ContractDefinition
     public class GetBalancesFunctionBase : FunctionMessage
     {
 
+    }
+
+    public partial class GetItemStatsFunction : GetItemStatsFunctionBase { }
+
+    [Function("getItemStats", typeof(GetItemStatsOutputDTO))]
+    public class GetItemStatsFunctionBase : FunctionMessage
+    {
+        [Parameter("uint256", "_idType", 1)]
+        public virtual BigInteger IdType { get; set; }
     }
 
     public partial class CreateItemOutputDTO : CreateItemOutputDTOBase { }
@@ -62,6 +82,8 @@ namespace helloWorld.ItemStorage.ContractDefinition
         public virtual Item ReturnValue1 { get; set; }
     }
 
+
+
     public partial class GetBalancesOutputDTO : GetBalancesOutputDTOBase { }
 
     [FunctionOutput]
@@ -69,5 +91,14 @@ namespace helloWorld.ItemStorage.ContractDefinition
     {
         [Parameter("uint256[]", "", 1)]
         public virtual List<BigInteger> ReturnValue1 { get; set; }
+    }
+
+    public partial class GetItemStatsOutputDTO : GetItemStatsOutputDTOBase { }
+
+    [FunctionOutput]
+    public class GetItemStatsOutputDTOBase : IFunctionOutputDTO 
+    {
+        [Parameter("tuple", "", 1)]
+        public virtual Item ReturnValue1 { get; set; }
     }
 }
