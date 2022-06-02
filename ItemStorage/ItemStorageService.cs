@@ -52,26 +52,58 @@ namespace helloWorld.ItemStorage
              return ContractHandler.SendRequestAndWaitForReceiptAsync(createItemFunction, cancellationToken);
         }
 
-        public Task<string> CreateItemRequestAsync(BigInteger idType, string name, string description, BigInteger damage)
+        public Task<string> CreateItemRequestAsync(BigInteger idType, string name, string description, BigInteger damage, string cid)
         {
             var createItemFunction = new CreateItemFunction();
                 createItemFunction.IdType = idType;
                 createItemFunction.Name = name;
                 createItemFunction.Description = description;
                 createItemFunction.Damage = damage;
+                createItemFunction.Cid = cid;
             
              return ContractHandler.SendRequestAsync(createItemFunction);
         }
 
-        public Task<TransactionReceipt> CreateItemRequestAndWaitForReceiptAsync(BigInteger idType, string name, string description, BigInteger damage, CancellationTokenSource cancellationToken = null)
+        public Task<TransactionReceipt> CreateItemRequestAndWaitForReceiptAsync(BigInteger idType, string name, string description, BigInteger damage, string cid, CancellationTokenSource cancellationToken = null)
         {
             var createItemFunction = new CreateItemFunction();
                 createItemFunction.IdType = idType;
                 createItemFunction.Name = name;
                 createItemFunction.Description = description;
                 createItemFunction.Damage = damage;
+                createItemFunction.Cid = cid;
             
              return ContractHandler.SendRequestAndWaitForReceiptAsync(createItemFunction, cancellationToken);
+        }
+
+        public Task<string> TransferItemToAddressRequestAsync(TransferItemToAddressFunction transferItemToAddressFunction)
+        {
+             return ContractHandler.SendRequestAsync(transferItemToAddressFunction);
+        }
+
+        public Task<TransactionReceipt> TransferItemToAddressRequestAndWaitForReceiptAsync(TransferItemToAddressFunction transferItemToAddressFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(transferItemToAddressFunction, cancellationToken);
+        }
+
+        public Task<string> TransferItemToAddressRequestAsync(string newOwner, BigInteger idType, BigInteger amount)
+        {
+            var transferItemToAddressFunction = new TransferItemToAddressFunction();
+                transferItemToAddressFunction.NewOwner = newOwner;
+                transferItemToAddressFunction.IdType = idType;
+                transferItemToAddressFunction.Amount = amount;
+            
+             return ContractHandler.SendRequestAsync(transferItemToAddressFunction);
+        }
+
+        public Task<TransactionReceipt> TransferItemToAddressRequestAndWaitForReceiptAsync(string newOwner, BigInteger idType, BigInteger amount, CancellationTokenSource cancellationToken = null)
+        {
+            var transferItemToAddressFunction = new TransferItemToAddressFunction();
+                transferItemToAddressFunction.NewOwner = newOwner;
+                transferItemToAddressFunction.IdType = idType;
+                transferItemToAddressFunction.Amount = amount;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(transferItemToAddressFunction, cancellationToken);
         }
 
         public Task<string> AddItemToAddressRequestAsync(AddItemToAddressFunction addItemToAddressFunction)

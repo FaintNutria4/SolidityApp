@@ -19,5 +19,7 @@ namespace helloWorld.ItemStorage.ContractDefinition
         public virtual string Description { get; set; }
         [Parameter("uint256", "damage", 4)]
         public virtual BigInteger Damage { get; set; }
+        [Parameter("string", "cid", 5)]
+        public virtual string Cid { get; set; }
     }
 }

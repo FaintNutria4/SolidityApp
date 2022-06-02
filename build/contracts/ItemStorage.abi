@@ -25,6 +25,11 @@
           "internalType": "uint256",
           "name": "_damage",
           "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_cid",
+          "type": "string"
         }
       ],
       "name": "createItem",
@@ -50,6 +55,11 @@
               "internalType": "uint256",
               "name": "damage",
               "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "cid",
+              "type": "string"
             }
           ],
           "internalType": "struct ItemStorage.Item",
@@ -57,6 +67,29 @@
           "type": "tuple"
         }
       ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_newOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_idType",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferItemToAddress",
+      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -94,8 +127,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -128,6 +160,11 @@
               "internalType": "uint256",
               "name": "damage",
               "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "cid",
+              "type": "string"
             }
           ],
           "internalType": "struct ItemStorage.Item",
@@ -136,7 +173,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ]

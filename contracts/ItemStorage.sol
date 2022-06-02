@@ -33,6 +33,11 @@ contract ItemStorage {
       _;
    }
 
+   modifier hasItems(uint _idType, uint _amount) {
+      require(address2Balances[msg.sender][_idType] >= _amount);
+      _;
+   }
+
    function createItem(uint _idType, string memory _name, string memory _description, uint _damage, string memory _cid) 
       public 
       onlyOwner 
@@ -47,7 +52,20 @@ contract ItemStorage {
 
    }
 
-   function addItemToAddress(address _newOwner, uint _idType, uint _items) public onlyOwner {
+   function transferItemToAddress(address _newOwner, uint _idType, uint _amount) 
+   public 
+   hasItems(_idType, _amount) 
+   {
+      address2Balances[msg.sender][_idType] -= _amount;
+      address2Balances[_newOwner][_idType] += _amount;
+
+   }
+
+   function addItemToAddress(address _newOwner, uint _idType, uint _items) 
+   public 
+   onlyOwner 
+   itemExists(_idType) 
+   {
       mapping(uint => uint) storage balances = address2Balances[_newOwner];
       balances[_idType] = balances[_idType] + _items;
    }
