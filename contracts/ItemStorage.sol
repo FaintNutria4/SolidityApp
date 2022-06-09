@@ -9,7 +9,7 @@ contract ItemStorage {
    mapping(address => mapping (uint => uint)) private address2Balances;
 
    mapping(uint => Item) itemStats;
-   uint itemTypes;
+   uint itemTypes = 1;
 
    struct Item {
       uint idType;
@@ -147,7 +147,7 @@ contract ItemStorage {
    hasGold(offer.buyer, offer.gold)
    {
       if(answer){
-         
+
          mapping(uint => uint) storage sellerBalances = address2Balances[offer.seller];
          mapping(uint => uint) storage buyerBalances = address2Balances[offer.buyer];
 
