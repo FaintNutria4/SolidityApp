@@ -86,22 +86,24 @@ namespace helloWorld.ItemStorage
              return ContractHandler.SendRequestAndWaitForReceiptAsync(transferItemToAddressFunction, cancellationToken);
         }
 
-        public Task<string> TransferItemToAddressRequestAsync(string newOwner, BigInteger idType, BigInteger amount)
+        public Task<string> TransferItemToAddressRequestAsync(string newOwner, BigInteger idType, BigInteger amount, BigInteger gold)
         {
             var transferItemToAddressFunction = new TransferItemToAddressFunction();
                 transferItemToAddressFunction.NewOwner = newOwner;
                 transferItemToAddressFunction.IdType = idType;
                 transferItemToAddressFunction.Amount = amount;
+                transferItemToAddressFunction.Gold = gold;
             
              return ContractHandler.SendRequestAsync(transferItemToAddressFunction);
         }
 
-        public Task<TransactionReceipt> TransferItemToAddressRequestAndWaitForReceiptAsync(string newOwner, BigInteger idType, BigInteger amount, CancellationTokenSource cancellationToken = null)
+        public Task<TransactionReceipt> TransferItemToAddressRequestAndWaitForReceiptAsync(string newOwner, BigInteger idType, BigInteger amount, BigInteger gold, CancellationTokenSource cancellationToken = null)
         {
             var transferItemToAddressFunction = new TransferItemToAddressFunction();
                 transferItemToAddressFunction.NewOwner = newOwner;
                 transferItemToAddressFunction.IdType = idType;
                 transferItemToAddressFunction.Amount = amount;
+                transferItemToAddressFunction.Gold = gold;
             
              return ContractHandler.SendRequestAndWaitForReceiptAsync(transferItemToAddressFunction, cancellationToken);
         }

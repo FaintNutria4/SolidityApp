@@ -19,6 +19,18 @@ contract ItemStorage {
       string cid;
    }
 
+   //Buy from somebody
+
+   mapping(address => Offer[]) Address2Offers;
+
+   struct Offer {
+      address buyer;
+      address seller;
+      uint itemId;
+      uint amount;
+      uint gold;
+   }
+
    constructor() {
       owner = msg.sender;
    }
@@ -38,6 +50,16 @@ contract ItemStorage {
       _;
    }
 
+   modifier notGold(uint _idType){
+      require(_idType != 0);
+      _;
+   }
+
+   modifier hasGold(address _adr, uint _gold){
+      require(address2Balances[_adr][0] >= _gold);
+      _;
+   }
+
    function createItem(uint _idType, string memory _name, string memory _description, uint _damage, string memory _cid) 
       public 
       onlyOwner 
@@ -52,10 +74,16 @@ contract ItemStorage {
 
    }
 
-   function transferItemToAddress(address _newOwner, uint _idType, uint _amount) 
-   public 
-   hasItems(_idType, _amount) 
+   function transferItemToAddress(address _newOwner, uint _idType, uint _amount, uint _gold) 
+   public
+   onlyOwner
+   notGold(_idType) 
+   hasItems(_idType, _amount)
+
    {
+      address2Balances[_newOwner][0] -= _gold;
+      address2Balances[msg.sender][0] += _gold;
+
       address2Balances[msg.sender][_idType] -= _amount;
       address2Balances[_newOwner][_idType] += _amount;
 
@@ -87,5 +115,60 @@ contract ItemStorage {
    function getItemStats(uint _idType) public view itemExists(_idType) returns (Item memory) {
       return itemStats[_idType];
    }
+
+   function getOffersList() public view returns (Offer[] memory){
+      return Address2Offers[msg.sender];
+   }
+
+   function makeOffer(
+   address _buyer,
+   address _seller,
+   uint _itemId,
+   uint _amount,
+   uint _gold)
+   public 
+   itemExists(_itemId) 
+   {
+      Offer[] storage offers = Address2Offers[_seller];
+      Offer memory newOffer = Offer( _buyer, _seller, _itemId, _amount, _gold);
+      offers.push(newOffer);
+   }  
+
+
+   function answerOfferExternal(uint index, bool answer) external {
+      Offer[] memory offers = Address2Offers[msg.sender];
+      answerOffer(offers[index], index, answer);
+   }
+
+   function answerOffer(Offer memory offer, uint index, bool answer) 
+   private 
+   notGold(offer.itemId)
+   hasItems(offer.itemId, offer.amount)
+   hasGold(offer.buyer, offer.gold)
+   {
+      if(answer){
+         
+         mapping(uint => uint) storage sellerBalances = address2Balances[offer.seller];
+         mapping(uint => uint) storage buyerBalances = address2Balances[offer.buyer];
+
+         buyerBalances[0] = buyerBalances[0] - offer.gold;
+         sellerBalances[0] = sellerBalances[0] + offer.gold;
+
+         sellerBalances[offer.itemId] = sellerBalances[offer.itemId] - offer.amount;
+         buyerBalances[offer.itemId] = buyerBalances[offer.itemId] + offer.amount;
+      }
+         
+
+         popItemFromArray(msg.sender, index);
+   }
+
+
+   function popItemFromArray(address OfferSeller, uint index) private{
+      Offer[] storage offers = Address2Offers[OfferSeller];
+      for(uint i = index; i < offers.length-1; i++){
+         offers[i] = offers[i+1];      
+      }
+      offers.pop();
+  }
 
  }  
