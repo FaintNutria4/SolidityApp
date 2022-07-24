@@ -161,5 +161,88 @@ namespace helloWorld.ItemStorage
             
             return ContractHandler.QueryDeserializingToObjectAsync<GetItemStatsFunction, GetItemStatsOutputDTO>(getItemStatsFunction, blockParameter);
         }
+
+        public Task<GetOffersListOutputDTO> GetOffersListQueryAsync(GetOffersListFunction getOffersListFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryDeserializingToObjectAsync<GetOffersListFunction, GetOffersListOutputDTO>(getOffersListFunction, blockParameter);
+        }
+
+        public Task<GetOffersListOutputDTO> GetOffersListQueryAsync(BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryDeserializingToObjectAsync<GetOffersListFunction, GetOffersListOutputDTO>(null, blockParameter);
+        }
+
+        public Task<string> MakeOfferRequestAsync(MakeOfferFunction makeOfferFunction)
+        {
+             return ContractHandler.SendRequestAsync(makeOfferFunction);
+        }
+
+        public Task<TransactionReceipt> MakeOfferRequestAndWaitForReceiptAsync(MakeOfferFunction makeOfferFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(makeOfferFunction, cancellationToken);
+        }
+
+        public Task<string> MakeOfferRequestAsync(string buyer, string seller, BigInteger itemId, BigInteger amount, BigInteger gold)
+        {
+            var makeOfferFunction = new MakeOfferFunction();
+                makeOfferFunction.Buyer = buyer;
+                makeOfferFunction.Seller = seller;
+                makeOfferFunction.ItemId = itemId;
+                makeOfferFunction.Amount = amount;
+                makeOfferFunction.Gold = gold;
+            
+             return ContractHandler.SendRequestAsync(makeOfferFunction);
+        }
+
+        public Task<TransactionReceipt> MakeOfferRequestAndWaitForReceiptAsync(string buyer, string seller, BigInteger itemId, BigInteger amount, BigInteger gold, CancellationTokenSource cancellationToken = null)
+        {
+            var makeOfferFunction = new MakeOfferFunction();
+                makeOfferFunction.Buyer = buyer;
+                makeOfferFunction.Seller = seller;
+                makeOfferFunction.ItemId = itemId;
+                makeOfferFunction.Amount = amount;
+                makeOfferFunction.Gold = gold;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(makeOfferFunction, cancellationToken);
+        }
+
+        public Task<string> AnswerOfferExternalRequestAsync(AnswerOfferExternalFunction answerOfferExternalFunction)
+        {
+             return ContractHandler.SendRequestAsync(answerOfferExternalFunction);
+        }
+
+        public Task<TransactionReceipt> AnswerOfferExternalRequestAndWaitForReceiptAsync(AnswerOfferExternalFunction answerOfferExternalFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(answerOfferExternalFunction, cancellationToken);
+        }
+
+        public Task<string> AnswerOfferExternalRequestAsync(BigInteger index, bool answer)
+        {
+            var answerOfferExternalFunction = new AnswerOfferExternalFunction();
+                answerOfferExternalFunction.Index = index;
+                answerOfferExternalFunction.Answer = answer;
+            
+             return ContractHandler.SendRequestAsync(answerOfferExternalFunction);
+        }
+
+        public Task<TransactionReceipt> AnswerOfferExternalRequestAndWaitForReceiptAsync(BigInteger index, bool answer, CancellationTokenSource cancellationToken = null)
+        {
+            var answerOfferExternalFunction = new AnswerOfferExternalFunction();
+                answerOfferExternalFunction.Index = index;
+                answerOfferExternalFunction.Answer = answer;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(answerOfferExternalFunction, cancellationToken);
+        }
+
+        public Task<BigInteger> GetItemsNumberQueryAsync(GetItemsNumberFunction getItemsNumberFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<GetItemsNumberFunction, BigInteger>(getItemsNumberFunction, blockParameter);
+        }
+
+        
+        public Task<BigInteger> GetItemsNumberQueryAsync(BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<GetItemsNumberFunction, BigInteger>(null, blockParameter);
+        }
     }
 }

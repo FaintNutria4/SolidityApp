@@ -162,8 +162,11 @@ contract ItemStorage {
          popItemFromArray(msg.sender, index);
    }
 
+   function getItemsNumber() view external returns(uint) {
+      return itemTypes;
+   }
 
-   function popItemFromArray(address OfferSeller, uint index) private{
+   function popItemFromArray(address OfferSeller, uint index) private {
       Offer[] storage offers = Address2Offers[OfferSeller];
       for(uint i = index; i < offers.length-1; i++){
          offers[i] = offers[i+1];      
